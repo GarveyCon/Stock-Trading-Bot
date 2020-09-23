@@ -13,14 +13,7 @@ from pandas_datareader import data
 from datetime import date
 import time
 
-# Open .csv files containing Stock Symbols, Stock Data, and Buy/Sell Signals as dataFrames
-stockSymbols = pd.read_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\constituents.csv")
-masterData = pd.read_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\MasterData.csv",
-                         index_col="Date")
-buySellSignals = pd.read_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\BuySellSignals.csv",
-                             index_col="Date")
-
-
+# Data downloading function
 def getTodaysData(symbols, masterData, buySellSignals, todays_date):
     # Download todays data for each stock and add to Master Data .csv
     failed_reads = []
@@ -80,13 +73,21 @@ def getTodaysData(symbols, masterData, buySellSignals, todays_date):
     return masterData, buySellSignals, failed_reads_df
 
 
+#######################################################################################################################
+
+# Open .csv files containing Stock Symbols, Stock Data, and Buy/Sell Signals as dataFrames
+stockSymbols = pd.read_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\constituents.csv")
+masterData = pd.read_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\MasterData.csv",
+                         index_col="Date")
+buySellSignals = pd.read_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\BuySellSignals.csv",
+                             index_col="Date")
 # Get todays date
 todays_date = str(date.today())
 
 day = date.today().weekday()
 # print(todays_date)
 
-# Only runs if it is a weekday
+# Only runs if it is a weekday - this should be handled by the scheduler anyways
 if day in range(6, 8):
     print('Not a weekday')
     exit()
@@ -107,4 +108,3 @@ if len(failed_symbols) != 0:
 # Save off data and signals
 masterData.to_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\MasterData.csv")
 buySellSignals.to_csv("C:\\Users\\Connor Garvey\\Documents\\Data Stuff\\StockProject\\BuySellSignals.csv")
-
