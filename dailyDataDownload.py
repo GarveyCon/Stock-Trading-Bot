@@ -15,7 +15,7 @@ import time
 import requests
 import json
 import logging
-from config import *
+from config import *            # This file contains the Alpaca API keys
 
 
 # Data downloading function
